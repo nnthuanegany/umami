@@ -20,6 +20,8 @@ model User {
   website  Website[]
   teamUser TeamUser[]
   report   Report[]
+  funnel  Funnel[]
+  funnelStep FunnelStep[]
 
   @@map("user")
 }
@@ -73,6 +75,8 @@ model Website {
   eventData   EventData[]
   report      Report[]
   sessionData SessionData[]
+  funnel      Funnel[]
+  funnelStep  FunnelStep[]
 
   @@index([userId])
   @@index([createdAt])
@@ -216,4 +220,48 @@ model Report {
   @@index([type])
   @@index([name])
   @@map("report")
+}
+
+model Funnel {
+  id          String    @id() @unique() @map("funnel_id") @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  websiteId   String    @map("website_id") @db.Uuid
+  name        String    @map("name") @db.VarChar(200)
+  description String    @map("description") @db.VarChar(500)
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  funnelStep FunnelStep[]
+
+  user    User    @relation(fields: [userId], references: [id])
+  website Website @relation(fields: [websiteId], references: [id])
+
+  @@index([userId])
+  @@index([websiteId])
+  @@index([name])
+  @@map("funnel")
+}
+
+model FunnelStep {
+  id          String    @id() @unique() @map("funnel_step_id") @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  websiteId   String    @map("website_id") @db.Uuid
+  funnelId    String    @map("funnel_id") @db.Uuid
+  type        String    @map("type") @db.VarChar(200)
+  name        String    @map("name") @db.VarChar(200)
+  description String    @map("description") @db.VarChar(500)
+  settings    String    @map("settings") @db.Text
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user    User    @relation(fields: [userId], references: [id])
+  website Website @relation(fields: [websiteId], references: [id])
+  funnel Funnel   @relation(fields: [funnelId], references: [id])
+
+  @@index([userId])
+  @@index([websiteId])
+  @@index([funnelId])
+  @@index([type])
+  @@index([name])
+  @@map("funnel_step")
 }
