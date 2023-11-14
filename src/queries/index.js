@@ -1,3 +1,4 @@
+export * from './admin/funnel';
 export * from './admin/report';
 export * from './admin/team';
 export * from './admin/teamUser';

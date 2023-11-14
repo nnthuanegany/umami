@@ -44,6 +44,12 @@ export interface ReportSearchFilter extends SearchFilter {
   includeTeams?: boolean;
 }
 
+export interface FunnelSearchFilter extends SearchFilter {
+  userId?: string;
+  websiteId?: string;
+  includeTeams?: boolean;
+}
+
 export interface SearchFilter {
   query?: string;
   page?: number;

@@ -1,4 +1,4 @@
-import { Report } from '@prisma/client';
+import { Funnel, Report } from '@prisma/client';
 import redis from '@umami/redis-client';
 import debug from 'debug';
 import { PERMISSIONS, ROLE_PERMISSIONS, SHARE_TOKEN_HEADER } from 'lib/constants';
@@ -222,6 +222,30 @@ export async function canUpdateUser({ user }: Auth, viewedUserId: string) {
 
 export async function canDeleteUser({ user }: Auth) {
   return user.isAdmin;
+}
+
+export async function canViewFunnel(auth: Auth, funnel: Funnel) {
+  if (auth.user.isAdmin) {
+    return true;
+  }
+
+  if (auth.user.id == funnel.userId) {
+    return true;
+  }
+
+  return !!(await canViewWebsite(auth, funnel.websiteId));
+}
+
+export async function canUpdateFunnel({ user }: Auth, funnel: Funnel) {
+  if (user.isAdmin) {
+    return true;
+  }
+
+  return user.id == funnel.userId;
+}
+
+export async function canDeleteFunnel(auth: Auth, funnel: Funnel) {
+  return canUpdateFunnel(auth, funnel);
 }
 
 export async function hasPermission(role: string, permission: string | string[]) {
