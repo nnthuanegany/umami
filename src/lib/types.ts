@@ -50,6 +50,69 @@ export interface FunnelSearchFilter extends SearchFilter {
   includeTeams?: boolean;
 }
 
+export interface FunnelStepSearchFilter extends SearchFilter {
+  userId?: string;
+  websiteId?: string;
+  funnelId?: string;
+  includeTeams?: boolean;
+}
+
+export interface FunnelStepSettings extends GenericObject {
+  orderBumps?: FunnelStepOrderBumpSettings[];
+  orffers?: FunnelStepOfferSettings[];
+  products: FunnelStepProductSettings[];
+  rules?: GenericObject;
+  order?: GenericObject & {
+    eachAcceptedUpsellWillBe: number;
+  };
+  prices?: GenericObject & {
+    showPricesWithTaxes: boolean;
+  };
+  priority?: number;
+  confirmationMessage?: GenericObject & {
+    upsellSuccessMessage?: string;
+    upsellFailureMessage?: string;
+    upsellProcessingMessage?: string;
+  };
+  externalTrackingCode?: string;
+  customRedirection?: boolean;
+  redirectUrl?: string;
+  url: string;
+}
+
+export interface FunnelStepOrderBumpSettings extends GenericObject {
+  id: string;
+  name: string;
+  products: FunnelStepProductSettings[];
+  design?: GenericObject;
+  priority?: number;
+}
+
+export interface FunnelStepOfferSettings extends GenericObject {
+  id: string;
+  name: string;
+  products: FunnelStepProductSettings[];
+  design?: GenericObject;
+}
+
+export interface FunnelStepProductSettings extends GenericObject {
+  id: string;
+  productId?: string;
+  productUrl?: string;
+  productVariantId?: string;
+  productVariantUrl?: string;
+  discount: {
+    amount: string;
+    currencyCode: string;
+    quantity: string;
+    priority: number;
+    fixedAmount: boolean;
+    percentage: boolean;
+  };
+  design?: GenericObject;
+  flatShipping?: number;
+}
+
 export interface SearchFilter {
   query?: string;
   page?: number;
@@ -69,6 +132,10 @@ export interface FilterResult<T> {
 
 export interface DynamicData {
   [key: string]: number | string | DynamicData | number[] | string[] | DynamicData[];
+}
+
+export interface GenericObject {
+  [key: string]: any;
 }
 
 export interface Auth {

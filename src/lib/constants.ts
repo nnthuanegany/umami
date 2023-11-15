@@ -33,6 +33,18 @@ export const FILTER_PAGES = 'filter-pages';
 export const UNIT_TYPES = ['year', 'month', 'hour', 'day'];
 export const EVENT_COLUMNS = ['url', 'referrer', 'title', 'query', 'event'];
 
+export const EACH_ACCEPTED_UPSELL_WILL_BE = {
+  mergedWithTheMainOrder: 1,
+  createANewOrder: 2,
+} as const;
+
+export const STEP_TYPE = {
+  salesPage: 'sales-page',
+  checkoutPage: 'checkout-page',
+  oneClickUpsells: 'one-click-upsells',
+  thankYouPage: 'thank-you-page',
+} as const;
+
 export const SESSION_COLUMNS = [
   'browser',
   'os',
