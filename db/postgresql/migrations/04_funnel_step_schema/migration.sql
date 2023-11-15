@@ -20,6 +20,7 @@ CREATE TABLE "funnel_step" (
     "type" VARCHAR(200) NOT NULL,
     "name" VARCHAR(200) NOT NULL,
     "description" VARCHAR(500) NOT NULL,
+    "step" INTEGER NOT NULL DEFAULT 1,
     "settings" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6),

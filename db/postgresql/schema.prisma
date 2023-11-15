@@ -251,6 +251,7 @@ model FunnelStep {
   name        String    @map("name") @db.VarChar(200)
   description String    @map("description") @db.VarChar(500)
   settings    String    @map("settings") @db.Text
+  step        Int       @map("step") @db.Integer
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
 
